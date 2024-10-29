@@ -8,7 +8,7 @@ import {
   fireEvent,
 } from '@testing-library/react-native';
 import DepsProvider from '@/domain/depedencyContext/DepsContext';
-import SpaceshipListScreen from '@/app/screens/SpaceshipListScreen';
+import SpaceshipListScreen from '@/ui/screens/SpaceshipListScreen';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/domain/testUtils/reactQueryWrapper';
 

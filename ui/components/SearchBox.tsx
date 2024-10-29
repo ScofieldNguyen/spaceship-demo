@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { TextInput } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
+import { globalStyles } from '@/ui/styles';
 
 const DEBOUNCE_TIMEOUT_MS = 500;
 function SearchBox(props: { onSearch: (value: string) => void }) {
@@ -18,20 +19,26 @@ function SearchBox(props: { onSearch: (value: string) => void }) {
   }, [inputValue]);
 
   useEffect(() => {
-    if (debouncedValue) {
-      onSearch(debouncedValue); // Trigger search with debounced value
-    }
+    onSearch(debouncedValue);
   }, [debouncedValue, onSearch]);
 
   const onChangeText = useCallback((value: string) => setInputValue(value), []);
 
   return (
     <TextInput
+      style={styles.container}
       placeholder="Search Spaceships"
       value={inputValue}
       onChangeText={onChangeText}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    ...globalStyles.border,
+    ...globalStyles.padding,
+  },
+});
 
 export default memo(SearchBox);
