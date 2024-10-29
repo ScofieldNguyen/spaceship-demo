@@ -1,8 +1,12 @@
-import { View, Text, FlatList, TextInput } from 'react-native';
+import { FlatList, TextInput, View } from 'react-native';
 import { useCallback, useState } from 'react';
 import { useSpaceshipRepo } from '@/domain/depedencyContext/DepsContext';
 import useSpaceships from '@/domain/queries/useSpaceships';
+import SpaceShip from '@/domain/entities/SpaceShip';
+import SpaceshipRow from '@/app/components/SpaceshipRow';
+import SearchBox from '@/app/components/SearchBox';
 
+const ON_END_THRESHOLD = 0.5;
 export default function SpaceshipListScreen() {
   const [searchKey, setSearchKey] = useState('');
   const spaceShipRepo = useSpaceshipRepo();
@@ -18,27 +22,24 @@ export default function SpaceshipListScreen() {
     if (hasNextPage) fetchNextPage();
   }, [hasNextPage]);
 
+  const renderItem = useCallback(
+    ({ item }: { item: SpaceShip }) => <SpaceshipRow ship={item} />,
+    [],
+  );
+
+  const keyExtractor = useCallback((item: SpaceShip) => item.id.toString(), []);
+
   return (
     <View>
       {isLoading && <View testID={'loading'} />}
-      <TextInput
-        placeholder="Search Spaceships"
-        value={searchKey}
-        onChangeText={onSearch}
-      />
+      <SearchBox onSearch={onSearch} />
       <FlatList
         testID={'spaceship-list'}
         data={ships}
-        renderItem={({ item: ship }) => {
-          return (
-            <View key={ship.id} testID={'spaceship-row'}>
-              <Text>{ship.name}</Text>
-            </View>
-          );
-        }}
-        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
         onEndReached={onEndReach}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={ON_END_THRESHOLD}
       />
     </View>
   );

@@ -137,10 +137,8 @@ describe('Testing Spaceship List Screen', () => {
       searchKeyWord,
     );
 
-    // wait until loading finished
-    await waitFor(() =>
-      expect(screen.queryByTestId('loading')).not.toBeOnTheScreen(),
-    );
+    // wait until fetch function be called again
+    await waitFor(() => expect(spaceShipRepo.search).toHaveBeenCalledTimes(2));
 
     // fetch function should be call with search params
     expect(spaceShipRepo.search).toHaveBeenLastCalledWith(
