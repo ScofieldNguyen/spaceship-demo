@@ -221,6 +221,10 @@ export default class SpaceShipRepoMock implements SpaceshipRepository {
 
     const nextCursor = this.getNextCursor(paginatedShips);
 
+    if (Math.random() < 0.6) {
+      throw new Error('Random error occurred');
+    }
+
     return {
       ships: paginatedShips,
       hasMore: nextCursor !== null,
