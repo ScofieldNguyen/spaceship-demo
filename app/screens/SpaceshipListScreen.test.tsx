@@ -99,14 +99,56 @@ describe('Testing Spaceship List Screen', () => {
     // reach the end of the page
     await scrollFlatListToTheEnd();
 
-    // wait until loading finished
+    // wait until the second page is loaded
     await waitFor(() =>
-      expect(screen.queryByTestId('loading')).not.toBeOnTheScreen(),
+      expect(screen.queryAllByTestId('spaceship-row')).toHaveLength(
+        page1.ships.length + page2.ships.length,
+      ),
     );
 
     // now should display data in 2 pages
     expect(screen.getByText(page1.ships[0].name)).toBeOnTheScreen();
     expect(screen.getByText(page1.ships[1].name)).toBeOnTheScreen();
+    expect(screen.getByText(page2.ships[0].name)).toBeOnTheScreen();
+  });
+
+  test('search feature', async () => {
+    const searchKeyWord = 'search keyword';
+    spaceShipRepo.search = jest
+      .fn()
+      .mockImplementation((cursor: string | null, searchTerm: string) => {
+        if (searchTerm) {
+          return Promise.resolve(page2);
+        }
+        return Promise.resolve(page1);
+      });
+
+    renderComponent();
+
+    // wait until loading finished
+    expect(expect(screen.getByTestId('loading')).toBeOnTheScreen());
+    await waitFor(() =>
+      expect(screen.queryByTestId('loading')).not.toBeOnTheScreen(),
+    );
+
+    // search
+    fireEvent.changeText(
+      screen.getByPlaceholderText('Search Spaceships'),
+      searchKeyWord,
+    );
+
+    // wait until loading finished
+    await waitFor(() =>
+      expect(screen.queryByTestId('loading')).not.toBeOnTheScreen(),
+    );
+
+    // fetch function should be call with search params
+    expect(spaceShipRepo.search).toHaveBeenLastCalledWith(
+      undefined,
+      searchKeyWord,
+    );
+
+    // display search result
     expect(screen.getByText(page2.ships[0].name)).toBeOnTheScreen();
   });
 });
