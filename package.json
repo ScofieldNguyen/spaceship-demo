@@ -12,7 +12,10 @@
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx}\""
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "./jest-setup.ts"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
