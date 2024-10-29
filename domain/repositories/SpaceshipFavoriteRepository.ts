@@ -5,7 +5,7 @@ export default interface SpaceshipFavoriteRepository {
   listAll: () => Promise<SpaceShip[]>;
 
   // favorite a spaceship
-  favorite: () => Promise<SpaceShip>;
+  favorite: (spaceShip: SpaceShip) => Promise<SpaceShip>;
 
   // unfavorite a spaceship
   remove: () => Promise<void>;

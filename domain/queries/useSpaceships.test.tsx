@@ -3,34 +3,41 @@ import SpaceshipSearchResult from '@/domain/entities/SpaceshipSearchResult';
 import SpaceshipRepository from '@/domain/repositories/SpaceshipRepository';
 import { renderHook, waitFor } from '@testing-library/react-native';
 import useSpaceships from '@/domain/queries/useSpaceships';
-import { reactQueryWrapper } from '@/domain/testUtils/reactQueryWrapper';
+import {
+  queryClient,
+  reactQueryWrapper,
+} from '@/domain/testUtils/reactQueryWrapper';
 
 const spaceShipRepo: SpaceshipRepository = mockSpaceshipRepo();
 
-describe('test useSpaceships', () => {
-  test('should fetch spaceships successfully', async () => {
-    const mockData: SpaceshipSearchResult = {
-      ships: [
-        {
-          id: '1',
-          name: 'X-wing',
-          model: 'T-65 X-wing starfighter',
-          crew: '10',
-          passengers: '20',
-          consumables: '2 months',
-        },
-        {
-          id: '2',
-          name: 'TIE Fighter',
-          model: 'TIE/LN space superiority starfighter',
-          crew: '10',
-          passengers: '20',
-          consumables: '2 months',
-        },
-      ],
-      hasMore: false,
-    };
+const mockData: SpaceshipSearchResult = {
+  ships: [
+    {
+      id: '1',
+      name: 'X-wing',
+      model: 'T-65 X-wing starfighter',
+      crew: '10',
+      passengers: '20',
+      consumables: '2 months',
+    },
+    {
+      id: '2',
+      name: 'TIE Fighter',
+      model: 'TIE/LN space superiority starfighter',
+      crew: '10',
+      passengers: '20',
+      consumables: '2 months',
+    },
+  ],
+  hasMore: false,
+};
 
+describe('test useSpaceships', () => {
+  beforeEach(() => {
+    queryClient.clear();
+  });
+
+  test('should fetch spaceships successfully', async () => {
     spaceShipRepo.search = jest.fn().mockResolvedValue(mockData);
 
     const { result } = renderHook(() => useSpaceships(1, '', spaceShipRepo), {
