@@ -1,5 +1,5 @@
-import { Text } from 'react-native';
+import SpaceshipFavoriteScreen from '@/ui/screens/SpaceshipFavoriteScreen';
 
 export default function Favorite() {
-  return <Text>Favorite Screen</Text>;
+  return <SpaceshipFavoriteScreen />;
 }

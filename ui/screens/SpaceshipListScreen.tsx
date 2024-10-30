@@ -9,11 +9,10 @@ import { globalStyles } from '@/ui/styles';
 import { useThrottle } from '@uidotdev/usehooks';
 import LoadingView from '@/ui/components/LoadingView';
 import ErrorPage from '@/ui/components/ErrorPage';
+import ItemSeparator from '@/ui/components/ItemSeparator';
+import EmptyList from '@/ui/components/EmptyList';
 
 const ON_END_THRESHOLD = 0.5;
-function ItemSeparator() {
-  return <View style={styles.separator} />;
-}
 
 export default function SpaceshipListScreen() {
   const [searchKey, setSearchKey] = useState('');
@@ -53,6 +52,7 @@ export default function SpaceshipListScreen() {
         onEndReached={onEndReach}
         onEndReachedThreshold={ON_END_THRESHOLD}
         ItemSeparatorComponent={ItemSeparator}
+        ListEmptyComponent={EmptyList}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -61,5 +61,4 @@ export default function SpaceshipListScreen() {
 
 const styles = StyleSheet.create({
   container: { ...globalStyles.padding, flex: 1, rowGap: 12 },
-  separator: { height: 8 },
 });

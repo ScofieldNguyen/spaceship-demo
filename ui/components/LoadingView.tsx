@@ -4,7 +4,7 @@ import { globalStyles } from '@/ui/styles';
 
 export default function LoadingView() {
   return (
-    <View style={styles.loadingView}>
+    <View style={styles.loadingView} testID={'loading'}>
       <ActivityIndicator animating={true} size="large" color={colors.blue} />
     </View>
   );

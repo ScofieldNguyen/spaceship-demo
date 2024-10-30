@@ -1,11 +1,11 @@
 import mockSpaceshipFavoriteRepo from '@/domain/testUtils/mockSpaceshipFavoriteRepo';
 import { renderHook } from '@testing-library/react-native';
-import { useFavoriteSpaceshipMutation } from '@/domain/mutations/useFavoriteSpaceshipMutation';
 import {
   queryClient,
   reactQueryWrapper,
 } from '@/domain/testUtils/reactQueryWrapper';
 import SpaceShip from '@/domain/entities/SpaceShip';
+import { useUnFavoriteSpaceshipMutation } from '@/domain/mutations/useUnFavoriteSpaceshipMutation';
 
 const spaceShipFavoriteRepo = mockSpaceshipFavoriteRepo();
 
@@ -14,7 +14,7 @@ describe('Test useFavoriteSpaceshipMutation', () => {
     queryClient.clear();
   });
 
-  test('Should call favorite function', async () => {
+  test('Should call unfavorite function', async () => {
     const ship: SpaceShip = {
       id: '1',
       name: 'X-wing',
@@ -24,10 +24,10 @@ describe('Test useFavoriteSpaceshipMutation', () => {
       consumables: '2 months',
     };
 
-    spaceShipFavoriteRepo.favorite = jest.fn().mockResolvedValue(ship);
+    spaceShipFavoriteRepo.remove = jest.fn().mockResolvedValue(ship);
 
     const { result } = renderHook(
-      () => useFavoriteSpaceshipMutation(spaceShipFavoriteRepo),
+      () => useUnFavoriteSpaceshipMutation(spaceShipFavoriteRepo),
       {
         wrapper: reactQueryWrapper,
       },
@@ -35,6 +35,6 @@ describe('Test useFavoriteSpaceshipMutation', () => {
 
     await result.current.mutateAsync(ship);
 
-    expect(spaceShipFavoriteRepo.favorite).toHaveBeenCalledWith(ship);
+    expect(spaceShipFavoriteRepo.remove).toHaveBeenCalledWith(ship.id);
   });
 });

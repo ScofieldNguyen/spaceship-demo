@@ -1,7 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import SpaceShip from '@/domain/entities/SpaceShip';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { globalStyles } from '@/ui/styles';
+import { useSpaceshipFavoriteRepo } from '@/domain/depedencyContext/DepsContext';
+import { useFavoriteSpaceshipMutation } from '@/domain/mutations/useFavoriteSpaceshipMutation';
+import { useUnFavoriteSpaceshipMutation } from '@/domain/mutations/useUnFavoriteSpaceshipMutation';
+import useIsFavoriteSpaceship from '@/domain/queries/useIsFavoriteSpaceShip';
 
 function LabelRow(props: { label: string; value: string }) {
   return (
@@ -14,6 +18,22 @@ function LabelRow(props: { label: string; value: string }) {
 
 function SpaceshipRow(props: { ship: SpaceShip }) {
   const { ship } = props;
+  const spaceShipFavoriteRepo = useSpaceshipFavoriteRepo();
+  const { mutate: favoriteMutation } = useFavoriteSpaceshipMutation(
+    spaceShipFavoriteRepo!,
+  );
+  const { mutate: unFavoriteMutation } = useUnFavoriteSpaceshipMutation(
+    spaceShipFavoriteRepo!,
+  );
+
+  const { data: isFavorite } = useIsFavoriteSpaceship(
+    ship,
+    spaceShipFavoriteRepo!,
+  );
+
+  const onFavorite = useCallback(() => favoriteMutation(ship), []);
+  const onUnFavorite = useCallback(() => unFavoriteMutation(ship), []);
+
   return (
     <View key={ship.id} testID={'spaceship-row'} style={styles.container}>
       <LabelRow label={'Name'} value={ship.name} />
@@ -21,6 +41,12 @@ function SpaceshipRow(props: { ship: SpaceShip }) {
       <LabelRow label={'Crew'} value={ship.crew} />
       <LabelRow label={'Passengers'} value={ship.passengers} />
       <LabelRow label={'Consumables'} value={ship.consumables} />
+
+      {isFavorite ? (
+        <Button title={'UnFavorite'} onPress={onUnFavorite} />
+      ) : (
+        <Button title={'Favorite'} onPress={onFavorite} />
+      )}
     </View>
   );
 }

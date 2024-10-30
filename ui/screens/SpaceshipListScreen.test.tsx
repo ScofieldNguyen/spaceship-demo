@@ -1,16 +1,20 @@
 import SpaceshipSearchResult from '@/domain/entities/SpaceshipSearchResult';
 import mockSpaceshipRepo from '@/domain/testUtils/mockSpaceshipRepo';
 import {
-  render,
-  waitFor,
-  screen,
   act,
   fireEvent,
+  render,
+  screen,
+  waitFor,
 } from '@testing-library/react-native';
 import DepsProvider from '@/domain/depedencyContext/DepsContext';
 import SpaceshipListScreen from '@/ui/screens/SpaceshipListScreen';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/domain/testUtils/reactQueryWrapper';
+
+jest.mock('@uidotdev/usehooks', () => ({
+  useThrottle: jest.fn((value) => value),
+}));
 
 const page1: SpaceshipSearchResult = {
   ships: [
@@ -147,6 +151,8 @@ describe('Testing Spaceship List Screen', () => {
     );
 
     // display search result
-    expect(screen.getByText(page2.ships[0].name)).toBeOnTheScreen();
+    await waitFor(() =>
+      expect(screen.getByText(page2.ships[0].name)).toBeOnTheScreen(),
+    );
   });
 });

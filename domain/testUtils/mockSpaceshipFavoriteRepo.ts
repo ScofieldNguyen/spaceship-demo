@@ -5,5 +5,6 @@ export default function mockSpaceshipFavoriteRepo(): SpaceshipFavoriteRepository
     listAll: jest.fn(),
     favorite: jest.fn(),
     remove: jest.fn(),
+    isFavorite: jest.fn(),
   };
 }
