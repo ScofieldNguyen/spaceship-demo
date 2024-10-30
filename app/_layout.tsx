@@ -7,9 +7,7 @@ import SpaceshipRepositoryImpl from '@/integrations/spaceshipRepo/SpaceshipRepos
 import GraphAPIClient from '@/integrations/spaceshipRepo/GraphAPIClient';
 
 const spaceShipRepo = new SpaceshipRepositoryImpl(
-  new GraphAPIClient(
-    'https://swapi-graphql.netlify.app/.netlify/functions/index',
-  ),
+  new GraphAPIClient(process.env.EXPO_PUBLIC_API_ENDPOINT || ''),
 );
 const spaceShipFavoriteRepo = new StorageSpaceshipFavoriteRepositoryImpl(
   new AsyncStorageServiceImpl(),
