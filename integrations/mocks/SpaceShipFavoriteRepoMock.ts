@@ -10,8 +10,8 @@ export default class SpaceShipFavoriteRepoMock
     this.spaceships = [];
   }
 
-  isFavorite(id: string): boolean {
-    return this.spaceships.some((s) => s.id === id);
+  isFavorite(id: string): Promise<boolean> {
+    return Promise.resolve(this.spaceships.some((s) => s.id === id));
   }
 
   favorite(spaceShip: SpaceShip): Promise<SpaceShip> {

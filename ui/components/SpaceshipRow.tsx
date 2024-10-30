@@ -1,4 +1,10 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import SpaceShip from '@/domain/entities/SpaceShip';
 import { useCallback } from 'react';
 import { globalStyles } from '@/ui/styles';
@@ -6,6 +12,7 @@ import { useSpaceshipFavoriteRepo } from '@/domain/depedencyContext/DepsContext'
 import { useFavoriteSpaceshipMutation } from '@/domain/mutations/useFavoriteSpaceshipMutation';
 import { useUnFavoriteSpaceshipMutation } from '@/domain/mutations/useUnFavoriteSpaceshipMutation';
 import useIsFavoriteSpaceship from '@/domain/queries/useIsFavoriteSpaceShip';
+import { colors } from '@/ui/colors';
 
 function LabelRow(props: { label: string; value: string }) {
   return (
@@ -26,7 +33,7 @@ function SpaceshipRow(props: { ship: SpaceShip }) {
     spaceShipFavoriteRepo!,
   );
 
-  const { data: isFavorite } = useIsFavoriteSpaceship(
+  const { data: isFavorite, isLoading } = useIsFavoriteSpaceship(
     ship,
     spaceShipFavoriteRepo!,
   );
@@ -42,7 +49,9 @@ function SpaceshipRow(props: { ship: SpaceShip }) {
       <LabelRow label={'Passengers'} value={ship.passengers} />
       <LabelRow label={'Consumables'} value={ship.consumables} />
 
-      {isFavorite ? (
+      {isLoading ? (
+        <ActivityIndicator animating={true} size="small" color={colors.blue} />
+      ) : isFavorite ? (
         <Button title={'UnFavorite'} onPress={onUnFavorite} />
       ) : (
         <Button title={'Favorite'} onPress={onFavorite} />

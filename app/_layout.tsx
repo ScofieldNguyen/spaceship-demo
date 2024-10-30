@@ -1,11 +1,14 @@
 import { Link, Stack } from 'expo-router';
 import DepsProvider from '@/domain/depedencyContext/DepsContext';
-import SpaceShipRepoMock from '@/integrations/SpaceShipRepoMock';
+import SpaceShipRepoMock from '@/integrations/mocks/SpaceShipRepoMock';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import SpaceShipFavoriteRepoMock from '@/integrations/SpaceShipFavoriteRepoMock';
+import StorageSpaceshipFavoriteRepositoryImpl from '@/integrations/favoriteSpaceShipRepo/StorageSpaceshipFavoriteRepositoryImpl';
+import AsyncStorageServiceImpl from '@/integrations/favoriteSpaceShipRepo/StorageServiceImpl';
 
 const spaceShipRepo = new SpaceShipRepoMock();
-const spaceShipFavoriteRepo = new SpaceShipFavoriteRepoMock();
+const spaceShipFavoriteRepo = new StorageSpaceshipFavoriteRepositoryImpl(
+  new AsyncStorageServiceImpl(),
+);
 const queryClient = new QueryClient();
 
 export default function RootLayout() {

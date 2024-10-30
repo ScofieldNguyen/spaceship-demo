@@ -10,6 +10,6 @@ export default interface SpaceshipFavoriteRepository {
   // unfavorite a spaceship
   remove: (id: string) => Promise<SpaceShip>;
 
-  // check if a spaceship is favorited => should be fast and unreliable on network
-  isFavorite: (id: string) => boolean;
+  // check if a spaceship is favorited
+  isFavorite: (id: string) => Promise<boolean>;
 }
