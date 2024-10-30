@@ -29,6 +29,11 @@ export default class StorageSpaceshipFavoriteRepositoryImpl
       await this.fetchAllData();
     }
 
+    // check duplicate
+    if (this.spaceships.some((s) => s.id === spaceShip.id)) {
+      return Promise.resolve(spaceShip);
+    }
+
     this.spaceships.push(spaceShip);
 
     this.storageService.save(this.STORAGE_KEY, JSON.stringify(this.spaceships));
@@ -62,7 +67,7 @@ export default class StorageSpaceshipFavoriteRepositoryImpl
     }
 
     const index = this.spaceships.findIndex((s) => s.id === id);
-    const [removed] = this.spaceships.splice(index, 1);
+    const removed = this.spaceships[index];
     this.spaceships = this.spaceships.filter((s) => s.id !== id);
 
     this.storageService.save(this.STORAGE_KEY, JSON.stringify(this.spaceships));

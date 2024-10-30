@@ -77,11 +77,11 @@ describe('test storage spaceship favorite repository', () => {
     storageService.load = jest.fn().mockResolvedValue(JSON.stringify(mockData));
     const storage = new StorageSpaceshipFavoriteRepositoryImpl(storageService);
     const spaceShip: SpaceShip = {
-      id: '1',
-      name: 'X-wing',
-      model: 'T-65 X-wing starfighter',
-      crew: '10',
-      passengers: '20',
+      id: '3',
+      name: 'X-wing 3',
+      model: 'T-65 X-wing starfighter 3',
+      crew: '103',
+      passengers: '203',
       consumables: '2 months',
     };
     await storage.favorite(spaceShip);
@@ -94,6 +94,32 @@ describe('test storage spaceship favorite repository', () => {
       'favoriteSpaceships',
       JSON.stringify([...mockData, spaceShip]),
     );
+  });
+
+  test('add favorite duplicate', async () => {
+    storageService.load = jest.fn().mockResolvedValue(JSON.stringify(mockData));
+    storageService.save = jest.fn();
+
+    const storage = new StorageSpaceshipFavoriteRepositoryImpl(storageService);
+
+    // duplicate spaceship
+    const spaceShip: SpaceShip = {
+      id: '1',
+      name: 'X-wing',
+      model: 'T-65 X-wing starfighter',
+      crew: '10',
+      passengers: '20',
+      consumables: '2 months',
+    };
+    await storage.favorite(spaceShip);
+
+    const spaceships = await storage.listAll();
+
+    // data should stay the same
+    expect(spaceships).toStrictEqual(mockData);
+
+    // save should not be called
+    expect(storageService.save).not.toHaveBeenCalled();
   });
 
   test('remove favorite spaceship', async () => {
