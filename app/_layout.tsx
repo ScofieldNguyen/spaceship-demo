@@ -6,6 +6,10 @@ import AsyncStorageServiceImpl from '@/integrations/favoriteRepo/StorageServiceI
 import SpaceshipRepositoryImpl from '@/integrations/spaceshipRepo/SpaceshipRepositoryImpl';
 import GraphAPIClient from '@/integrations/spaceshipRepo/GraphAPIClient';
 
+// uncomment these lines to use mock versions of the repository
+// const spaceShipRepo = new SpaceShipRepoMock();
+// const spaceShipFavoriteRepo = new SpaceShipFavoriteRepoMock();
+
 const spaceShipRepo = new SpaceshipRepositoryImpl(
   new GraphAPIClient(process.env.EXPO_PUBLIC_API_ENDPOINT || ''),
 );

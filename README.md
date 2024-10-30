@@ -32,3 +32,6 @@ Also the changes in the outside world will not affect the Domain and UI layers, 
 For example:
 - Changing from RestAPI to GraphQL will only affect the Integrations layer
 - Changing from AsyncStorage to local DB will only affect the Integrations layer
+
+## Dependencies Injection
+All dependencies are injected through the `DepsProvider` Context in main `_layout.tsx` file.
