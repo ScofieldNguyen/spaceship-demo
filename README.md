@@ -1,50 +1,34 @@
-# Welcome to your Expo app 👋
+# SPACESHIP DEMO APP
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## How to start
+1. Clone the repository
+2. Run `yarn install`
+3. Run `yarn start`
 
-## Get started
+## Layers
 
-1. Install dependencies
+This project is devided into 3 main layers:
+- **Domain**:
+  - Contain all the business logic of the application
+  - It is a pure typescript layer, with no dependencies (except for react-query)
+  - It requires no knowledge of the outside world, only request data it needs through the Repository interface
+  - Well protected with unit tests
+  - Define its own entities and types
+  - Test it by mocking the Repository interface
+- **UI**:
+  - Contain all the UI logic of the application
+  - It uses the Domain layer to handle the business logic
+  - Test it by mocking the Repository interface
+- **Integrations**:
+  - Contain all the integrations with the outside world
+  - Convert the data from the outside world to the data in Domain layer
 
-   ```bash
-   npm install
-   ```
+Using this architecture, we can easily test the Domain and UI layers by mocking the Repository interface. 
 
-2. Start the app
+This way, we can develop Domain and UI layers without API integration. Open the possibility to develop new feature without waiting for backend to be ready.
 
-   ```bash
-    npx expo start
-   ```
+Also the changes in the outside world will not affect the Domain and UI layers, as long as the Repository interface is not changed.
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+For example:
+- Changing from RestAPI to GraphQL will only affect the Integrations layer
+- Changing from AsyncStorage to local DB will only affect the Integrations layer
