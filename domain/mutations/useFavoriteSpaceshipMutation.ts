@@ -11,17 +11,11 @@ export function useFavoriteSpaceshipMutation(
     mutationFn: (ship: SpaceShip) =>
       spaceshipFavoriteRepository?.favorite(ship),
     onSuccess: (data) => {
-      queryClient
-        .invalidateQueries({
-          queryKey: ['spaceship-favorite'],
-        })
-        .then(() =>
-          queryClient.refetchQueries({
-            queryKey: ['spaceship-favorite'],
-          }),
-        );
       queryClient.invalidateQueries({
         queryKey: ['spaceship-isfavorite', data.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['spaceship-favorite'],
       });
     },
   });

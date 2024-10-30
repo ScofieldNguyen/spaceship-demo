@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, View } from 'react-native';
-import { memo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useSpaceshipFavoriteRepo } from '@/domain/depedencyContext/DepsContext';
 import useFavoriteSpaceships from '@/domain/queries/useFavoriteSpaceships';
 import { globalStyles } from '@/ui/styles';
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
   container: { ...globalStyles.padding, flex: 1, rowGap: 12 },
 });
 
-export default memo(SpaceshipFavoriteScreen);
+export default SpaceshipFavoriteScreen;

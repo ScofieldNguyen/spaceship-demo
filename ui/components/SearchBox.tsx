@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { globalStyles } from '@/ui/styles';
 
@@ -30,6 +30,7 @@ function SearchBox(props: { onSearch: (value: string) => void }) {
       placeholder="Search Spaceships"
       value={inputValue}
       onChangeText={onChangeText}
+      clearButtonMode={'while-editing'}
     />
   );
 }
@@ -41,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(SearchBox);
+export default SearchBox;

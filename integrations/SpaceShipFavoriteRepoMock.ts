@@ -25,10 +25,8 @@ export default class SpaceShipFavoriteRepoMock
 
   remove(id: string): Promise<SpaceShip> {
     const index = this.spaceships.findIndex((s) => s.id === id);
-    if (index === -1) {
-      return Promise.reject(new Error('SpaceShip not found'));
-    }
     const [removed] = this.spaceships.splice(index, 1);
+    this.spaceships = this.spaceships.filter((s) => s.id !== id);
     return Promise.resolve(removed);
   }
 }

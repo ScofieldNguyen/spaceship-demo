@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import DepsProvider from '@/domain/depedencyContext/DepsContext';
 import SpaceShipRepoMock from '@/integrations/SpaceShipRepoMock';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -16,7 +16,14 @@ export default function RootLayout() {
         spaceShipFavoriteRepo={spaceShipFavoriteRepo}
       >
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="index"
+            options={{
+              title: 'Spaceships',
+              headerRight: () => <Link href={'/favorite'}>Favorite</Link>,
+            }}
+          />
+          <Stack.Screen name="favorite" options={{ title: 'Your Favorite' }} />
         </Stack>
       </DepsProvider>
     </QueryClientProvider>

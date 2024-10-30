@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { memo } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/ui/colors';
 
 function ErrorPage({
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ErrorPage;
+export default memo(ErrorPage);

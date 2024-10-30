@@ -1,6 +1,6 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 import SpaceShip from '@/domain/entities/SpaceShip';
-import { memo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { globalStyles } from '@/ui/styles';
 import { useSpaceshipFavoriteRepo } from '@/domain/depedencyContext/DepsContext';
 import { useFavoriteSpaceshipMutation } from '@/domain/mutations/useFavoriteSpaceshipMutation';
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(SpaceshipRow);
+export default SpaceshipRow;
