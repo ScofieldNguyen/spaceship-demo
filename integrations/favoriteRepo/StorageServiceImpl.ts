@@ -1,4 +1,4 @@
-import StorageService from '@/integrations/favoriteSpaceShipRepo/StorageService';
+import StorageService from '@/integrations/favoriteRepo/StorageService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class AsyncStorageServiceImpl implements StorageService {

@@ -1,11 +1,16 @@
 import { Link, Stack } from 'expo-router';
 import DepsProvider from '@/domain/depedencyContext/DepsContext';
-import SpaceShipRepoMock from '@/integrations/mocks/SpaceShipRepoMock';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import StorageSpaceshipFavoriteRepositoryImpl from '@/integrations/favoriteSpaceShipRepo/StorageSpaceshipFavoriteRepositoryImpl';
-import AsyncStorageServiceImpl from '@/integrations/favoriteSpaceShipRepo/StorageServiceImpl';
+import StorageSpaceshipFavoriteRepositoryImpl from '@/integrations/favoriteRepo/StorageSpaceshipFavoriteRepositoryImpl';
+import AsyncStorageServiceImpl from '@/integrations/favoriteRepo/StorageServiceImpl';
+import SpaceshipRepositoryImpl from '@/integrations/spaceshipRepo/SpaceshipRepositoryImpl';
+import GraphAPIClient from '@/integrations/spaceshipRepo/GraphAPIClient';
 
-const spaceShipRepo = new SpaceShipRepoMock();
+const spaceShipRepo = new SpaceshipRepositoryImpl(
+  new GraphAPIClient(
+    'https://swapi-graphql.netlify.app/.netlify/functions/index',
+  ),
+);
 const spaceShipFavoriteRepo = new StorageSpaceshipFavoriteRepositoryImpl(
   new AsyncStorageServiceImpl(),
 );

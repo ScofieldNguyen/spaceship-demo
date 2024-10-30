@@ -1,5 +1,5 @@
-import StorageSpaceshipFavoriteRepositoryImpl from '@/integrations/favoriteSpaceShipRepo/StorageSpaceshipFavoriteRepositoryImpl';
-import StorageService from '@/integrations/favoriteSpaceShipRepo/StorageService';
+import StorageSpaceshipFavoriteRepositoryImpl from '@/integrations/favoriteRepo/StorageSpaceshipFavoriteRepositoryImpl';
+import StorageService from '@/integrations/favoriteRepo/StorageService';
 import SpaceShip from '@/domain/entities/SpaceShip';
 
 const storageService: StorageService = {

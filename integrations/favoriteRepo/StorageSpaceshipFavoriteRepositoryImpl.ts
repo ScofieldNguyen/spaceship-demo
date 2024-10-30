@@ -1,5 +1,5 @@
 import SpaceshipFavoriteRepository from '@/domain/repositories/SpaceshipFavoriteRepository';
-import StorageService from '@/integrations/favoriteSpaceShipRepo/StorageService';
+import StorageService from '@/integrations/favoriteRepo/StorageService';
 import SpaceShip from '@/domain/entities/SpaceShip';
 
 export default class StorageSpaceshipFavoriteRepositoryImpl
