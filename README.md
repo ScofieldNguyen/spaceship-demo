@@ -35,3 +35,11 @@ For example:
 
 ## Dependencies Injection
 All dependencies are injected through the `DepsProvider` Context in main `_layout.tsx` file.
+
+## Technologies
+- **React**: UI library
+- **React Query**: Data fetching & Caching solution
+- **Jest**: Testing framework
+- **React Testing Library**: Testing utility
+- **Apollo**: GraphQL Client
+- **Async Storage**: Local storage
